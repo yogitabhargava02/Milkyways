@@ -18,8 +18,13 @@ const milkmanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
   milkInfo: {
+    type: String,
+  },
+  profileImage: {
+    type: String, // Store the path or URL to the image
+  },
+  deliveryTime: {
     type: String,
   },
   
@@ -29,7 +34,7 @@ const milkmanSchema = new mongoose.Schema({
       enum: ['Point'],
     },
     coordinates: [Number],
-},
+  },
 }, { collection: 'milkman' });
 
 milkmanSchema.index({ location: '2dsphere' });

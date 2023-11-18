@@ -1,3 +1,55 @@
+// const Milkman = require('../../models/MilkmanSchema');
+// const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcrypt');
+// require('dotenv').config();
+
+// const secretKey = process.env.SECRET_KEY;
+
+// const registerMilkman = async (req, res) => {
+//   try {
+//     const { name, email, mobileNumber, password, milkInfo, latitude, longitude } = req.body;
+
+   
+//     const existingMilkman = await Milkman.findOne({ email });
+
+//     if (existingMilkman) {
+//       return res.status(400).json({ message: 'Email already registered' });
+//     }
+
+   
+//     const saltRounds = 10;
+//     const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+//     const newMilkman = new Milkman({
+//       name,
+//       email,
+//       mobileNumber,
+//       password: hashedPassword, // Store the hashed password
+//       milkInfo,
+//       location: {
+//         type: 'Point',
+//         coordinates: [longitude, latitude],
+//       },
+//     });
+
+   
+//     await newMilkman.save();
+
+   
+//     const token = jwt.sign({ email: newMilkman.email, _id: newMilkman._id }, secretKey, { expiresIn: '1h' });
+
+//     res.status(201).json({ message: 'Milkman registered successfully', token });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Registration failed' });
+//   }
+// };
+
+// module.exports = {
+//   registerMilkman,
+// };
+
+
 const Milkman = require('../../models/MilkmanSchema');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -7,37 +59,51 @@ const secretKey = process.env.SECRET_KEY;
 
 const registerMilkman = async (req, res) => {
   try {
-    const { name, email, mobileNumber, password, milkInfo, latitude, longitude } = req.body;
+    const { 
+      name, 
+      email, 
+      mobileNumber, 
+      password, 
+      milkInfo, 
+      latitude, 
+      longitude, 
+      profileImage, 
+      deliveryTime 
+    } = req.body;
 
-   
+    // Check if the email is already registered
     const existingMilkman = await Milkman.findOne({ email });
 
     if (existingMilkman) {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
-   
+    // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    // Create a new milkman instance with the provided data
     const newMilkman = new Milkman({
       name,
       email,
       mobileNumber,
-      password: hashedPassword, // Store the hashed password
+      password: hashedPassword,
       milkInfo,
+      profileImage,
+      deliveryTime,
       location: {
         type: 'Point',
         coordinates: [longitude, latitude],
       },
     });
 
-   
+    // Save the new milkman to the database
     await newMilkman.save();
 
-   
+    // Generate a JWT token for the new milkman
     const token = jwt.sign({ email: newMilkman.email, _id: newMilkman._id }, secretKey, { expiresIn: '1h' });
 
+    // Send a success response with the token
     res.status(201).json({ message: 'Milkman registered successfully', token });
   } catch (error) {
     console.error(error);
@@ -48,3 +114,4 @@ const registerMilkman = async (req, res) => {
 module.exports = {
   registerMilkman,
 };
+
