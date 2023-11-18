@@ -22,7 +22,7 @@ const milkmanSchema = new mongoose.Schema({
     type: String,
   },
   profileImage: {
-    type: String, // Store the path or URL to the image
+    type: String,
   },
   deliveryTime: {
     type: String,

@@ -21,7 +21,7 @@ const milkmanLogin = async (req, res) => {
 
     const token = jwt.sign(
       { _id: milkman._id, mobileNumber: milkman.mobileNumber }, 
-      process.env.SECRET_KEY, // Use the actual environment variable
+      process.env.SECRET_KEY, 
       { expiresIn: '1h' } 
     );
 
