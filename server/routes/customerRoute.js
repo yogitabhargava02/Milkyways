@@ -6,6 +6,7 @@ const { customerLogin } = require('../controllers/auth/Customer/customerLogin');
 const milkmanListController = require('../controllers/auth/Customer/milkmanListController'); 
 const {initiateForgotPassword} = require('../controllers/auth/Customer/customerForgot');
 const customerResetPasswordController = require('../controllers/auth/Customer/customerReset');
+// const { createCustomerProfile } = require('../controllers/auth/Customer/customerProfile');
 
 router.post('/reset-password', customerResetPasswordController.resetPassword);
 

@@ -10,10 +10,10 @@ const customerSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  mobileNumber:{
-    type:String,
+  mobileNumber: {
+    type: String,
     required: true,
-    unique:true,
+    unique: true,
   },
   password: {
     type: String,
@@ -23,7 +23,17 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
 }, { collection: 'customer' });
 
 customerSchema.index({ location: '2dsphere' });

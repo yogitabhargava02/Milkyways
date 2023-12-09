@@ -18,22 +18,16 @@ const milkmanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  milkInfo: {
-    type: String,
-  },
-  profileImage: {
-    type: String,
-  },
-  deliveryTime: {
-    type: String,
-  },
-  
   location: {
     type: {
       type: String,
-      enum: ['Point'],
+      default: 'Point', // Set the default value directly
+      required: true,
     },
-    coordinates: [Number],
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
   },
 }, { collection: 'milkman' });
 
