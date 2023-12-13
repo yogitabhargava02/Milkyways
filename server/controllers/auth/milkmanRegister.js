@@ -8,9 +8,10 @@ const registerMilkman = async (req, res) => {
   try {
     const { name, mobileNumber, password, address, location } = req.body;
 
+  
     const { coordinates, type } = location;
-    const [latitude, longitude] = coordinates;
-
+    const [latitude,longitude] = coordinates;
+    
     // Check if milkman with the given mobile number already exists
     const existingMilkman = await Milkman.findOne({ mobileNumber });
 
