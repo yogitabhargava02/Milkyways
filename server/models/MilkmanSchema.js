@@ -5,11 +5,7 @@ const milkmanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  
   mobileNumber: {
     type: String,
     required: true,
@@ -21,7 +17,7 @@ const milkmanSchema = new mongoose.Schema({
   location: {
     type: {
       type: String,
-      default: 'Point', // Set the default value directly
+      default: 'Point',
       required: true,
     },
     coordinates: {
@@ -29,6 +25,24 @@ const milkmanSchema = new mongoose.Schema({
       required: true,
     },
   },
+  profileImage: {
+    type: String,
+  },
+  billingInfo: {
+    perDayCharge: {
+      type: Number,
+     
+    },
+    // Add more billing information if needed, e.g., per week charge, etc.
+  },
+  availability: [
+    {
+      day: String,
+      timeSlots: [String],
+    }
+  ],
+ 
+  
 }, { collection: 'milkman' });
 
 milkmanSchema.index({ location: '2dsphere' });
