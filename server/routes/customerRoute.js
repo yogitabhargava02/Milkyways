@@ -26,7 +26,7 @@ router.get('/nearby', async (req, res) => {
     try {
       const customerLocation = {
         type: 'Point',
-        coordinates: [parseFloat(req.query.longitude), parseFloat(req.query.latitude)],
+        coordinates: [parseFloat(req.query.latitude), parseFloat(req.query.longitude)],
       };
   
       const maxDistance = req.query.maxDistance || 5000; // Default to 5 km if not provided

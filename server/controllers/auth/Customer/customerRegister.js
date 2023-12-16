@@ -11,7 +11,7 @@ const customerRegister = async (req, res) => {
 
   
     const { coordinates, type } = location;
-    const [latitude,longitude] = coordinates;
+    const [longitude,latitude] = coordinates;
     
     const existingCustomer = await Customer.findOne({ mobileNumber });
 

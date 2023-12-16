@@ -1,13 +1,8 @@
-const mongoose = require('mongoose');
-const milkmanSchema = new mongoose.Schema({
-  // ... (your existing code for MilkmanSchema)
-}, { collection: 'milkman' });
+const Milkman = require('../../models/MilkmanSchema');
 
-milkmanSchema.index({ location: '2dsphere' });
-
-milkmanSchema.statics.getSubscribedCustomers = async function (milkmanId) {
+async function getSubscribedCustomers(milkmanId) {
   try {
-    const milkman = await this.findById(milkmanId).populate('subscribedCustomers');
+    const milkman = await Milkman.findById(milkmanId).populate('subscribedCustomers');
 
     if (!milkman) {
       throw new Error('Milkman not found');
@@ -18,10 +13,8 @@ milkmanSchema.statics.getSubscribedCustomers = async function (milkmanId) {
     console.error(error);
     return { success: false, message: 'Failed to fetch subscribed customers' };
   }
-};
-
-const Milkman = mongoose.model('Milkman', milkmanSchema);
+}
 
 module.exports = {
-  getSubscribedCustomers: Milkman.getSubscribedCustomers,
+  getSubscribedCustomers,
 };

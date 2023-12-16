@@ -19,6 +19,10 @@ async function subscribeCustomerToMilkman(customerId, milkmanId) {
 
     await customer.save();
 
+    milkman.subscribedCustomers.push(customerId);
+    await milkman.save();
+console.log(customerId);
+
     return { success: true, message: 'Subscription successful' };
   } catch (error) {
     console.error(error);
