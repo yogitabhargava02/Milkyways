@@ -33,7 +33,7 @@ const milkmanSchema = new mongoose.Schema({
       type: Number,
      
     },
-    // Add more billing information if needed, e.g., per week charge, etc.
+   
   },
   availability: [
     {
@@ -41,6 +41,12 @@ const milkmanSchema = new mongoose.Schema({
       timeSlots: [String],
     }
   ],
+  
+
+  subscribedCustomers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer', 
+  }],
  
   
 }, { collection: 'milkman' });

@@ -5,7 +5,7 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-   mobileNumber: {
+  mobileNumber: {
     type: String,
     required: true,
     unique: true,
@@ -29,6 +29,12 @@ const customerSchema = new mongoose.Schema({
       required: true,
     },
   },
+  subscribedMilkmen: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Milkman',
+    },
+  ],
 }, { collection: 'customer' });
 
 customerSchema.index({ location: '2dsphere' });

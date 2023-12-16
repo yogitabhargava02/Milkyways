@@ -8,8 +8,13 @@ const { customerLogin } = require('../controllers/auth/Customer/customerLogin');
 const {initiateForgotPassword} = require('../controllers/auth/Customer/customerForgot');
 const customerResetPasswordController = require('../controllers/auth/Customer/customerReset');
   
+const subscriptionController = require('../controllers/auth/Customer/customerSubscription');
 const milkmanController = require('../controllers/auth/Customer/milkmanController');
 router.post('/reset-password', customerResetPasswordController.resetPassword);
+
+
+
+
 
 router.post('/forgot-password', initiateForgotPassword);
 router.post('/cregister', customerRegister);
@@ -34,4 +39,27 @@ router.get('/nearby', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+  
+
+// POST /subscribe
+
+router.post('/subscribe', async (req, res) => {
+  const { customerId, milkmanId } = req.body;
+  console.log('Attempting to subscribe customer', customerId, 'to milkman', milkmanId);
+
+  const result = await subscriptionController.subscribeCustomerToMilkman(customerId, milkmanId);
+
+  console.log('Subscription result:', result);
+
+  if (result.success) {
+    return res.status(200).json({ message: result.message });
+  } else {
+    return res.status(400).json({ error: result.message });
+  }
+});
+
+
+
+
+
 module.exports = router;

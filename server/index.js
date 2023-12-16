@@ -11,6 +11,15 @@ require("./config/database");
 
 
 
+
+
+
+
+// Middleware and other configurations...
+
+
+
+
 app.use('/api/milkman', milkmanRoutes);
 app.use('/api/customer', customerRoutes);
 app.get('/reset-password', (req, res) => {

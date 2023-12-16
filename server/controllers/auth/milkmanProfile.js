@@ -1,52 +1,37 @@
 const jwt = require('jsonwebtoken');
-const MilkmanProfile = require('../../models/milkmanProfile');
+const Milkman = require('../../models/milkman'); // Assuming your model is named Milkman
 
-// Controller function for creating a milkman profile
 const createMilkmanProfile = async (req, res) => {
   try {
-    // Extract data from the request body
-   // Extract data from the request body
-// Extract data from the request body
-const {
-  name,
-  email,
-  profileImage,
-  contactInformation,
-  address,
-  coordinates,
-  city,
-  dairyProductsOffered,
-  deliverySchedule,
-  // Other fields as needed
-} = req.body;
+    const {
+      name,
+      mobileNumber,
+      password,
+      location,
+      profileImage,
+      billingInfo,
+      availability,
+    } = req.body;
 
-// Correct the order of coordinates
-const [latitude, longitude] = coordinates;
+    // Create a new milkman instance
+    const newMilkman = new Milkman({
+      name,
+      mobileNumber,
+      password,
+      location: {
+        type: 'Point',
+        coordinates: location.coordinates,
+      },
+      profileImage,
+      billingInfo,
+      availability,
+    });
 
-// Create a new milkman profile instance
-const newMilkmanProfile = new MilkmanProfile({
-  name,
-  email,
-  profileImage,
-  contactInformation,
-  address,
-  coordinates: {
-    type: "Point",
-    coordinates: [longitude, latitude], // Switched the order
-  },
-  city,
-  dairyProductsOffered,
-  deliverySchedule,
-  // Other fields as needed
-});
+    // Save the milkman to the database
+    await newMilkman.save();
 
-// Save the milkman profile to the database
-await newMilkmanProfile.save();
-
-// Respond with a success message or the created milkman profile object
-res.status(201).json({ message: 'Milkman profile created successfully', milkmanProfile: newMilkmanProfile });
-
-    // res.status(201).json({ message: 'Milkman profile created successfully', milkmanProfile: newMilkmanProfile });
+    // Respond with a success message or the created milkman object
+    res.status(201).json({ message: 'Milkman profile created successfully', milkman: newMilkman });
   } catch (error) {
     // Handle errors (e.g., validation error, duplicate key error)
     console.error('Error creating milkman profile:', error.message);
@@ -54,6 +39,32 @@ res.status(201).json({ message: 'Milkman profile created successfully', milkmanP
   }
 };
 
+const updateMilkmanProfile = async (req, res) => {
+  try {
+    const { milkmanId } = req.params;
+    const updateFields = req.body;
+
+    // Find the milkman by ID and update the fields
+    const updatedMilkman = await Milkman.findByIdAndUpdate(
+      milkmanId,
+      { $set: updateFields },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedMilkman) {
+      return res.status(404).json({ error: 'Milkman not found' });
+    }
+
+    // Respond with the updated milkman object
+    res.status(200).json({ message: 'Milkman profile updated successfully', milkman: updatedMilkman });
+  } catch (error) {
+    // Handle errors
+    console.error('Error updating milkman profile:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   createMilkmanProfile,
+  updateMilkmanProfile,
 };
