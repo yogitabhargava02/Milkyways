@@ -43,10 +43,19 @@ const milkmanSchema = new mongoose.Schema({
   ],
   
 
-  subscribedCustomers: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer', 
-  }],
+  subscribedCustomers: [
+    {
+      customer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+      },
+      startDate: {
+        type: Date,
+        required: true,
+      },
+    },
+  ],
+  
  
   
 }, { collection: 'milkman' });

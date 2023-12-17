@@ -1,7 +1,7 @@
 const Customer = require('../../../models/CustomerSchema');
 const Milkman = require('../../../models/MilkmanSchema');
 
-async function subscribeCustomerToMilkman(customerId, milkmanId) {
+async function subscribeCustomerToMilkman(customerId, milkmanId, startDate) {
   try {
   
     const customer = await Customer.findById(customerId);
@@ -15,11 +15,13 @@ async function subscribeCustomerToMilkman(customerId, milkmanId) {
       throw new Error('Customer is already subscribed to this Milkman');
     }
 
-    customer.subscribedMilkmen.push(milkmanId);
+    customer.subscribedMilkmen.push({ milkmanId, startDate });
 
     await customer.save();
 
-    milkman.subscribedCustomers.push(customerId);
+    milkman.subscribedCustomers.push({ customer: customerId, startDate });
+
+
     await milkman.save();
 console.log(customerId);
 

@@ -1,5 +1,6 @@
 
 const express = require('express');
+const moment = require('moment');
 const router = express.Router();
 const { customerRegister } = require('../controllers/auth/Customer/customerRegister');
 const { customerLogin } = require('../controllers/auth/Customer/customerLogin');
@@ -42,12 +43,18 @@ router.get('/nearby', async (req, res) => {
   
 
 // POST /subscribe
+// POST /subscribeconst moment = require('moment');
 
 router.post('/subscribe', async (req, res) => {
-  const { customerId, milkmanId } = req.body;
-  console.log('Attempting to subscribe customer', customerId, 'to milkman', milkmanId);
+  const { customerId, milkmanId, startDate } = req.body;
+  console.log('Attempting to subscribe customer', customerId, 'to milkman', milkmanId, 'starting on', startDate);
 
-  const result = await subscriptionController.subscribeCustomerToMilkman(customerId, milkmanId);
+  // Validate the startDate format
+  if (!moment(startDate, moment.ISO_8601, true).isValid()) {
+    return res.status(400).json({ error: 'Invalid startDate format. Please use YYYY-MM-DD.' });
+  }
+
+  const result = await subscriptionController.subscribeCustomerToMilkman(customerId, milkmanId, startDate);
 
   console.log('Subscription result:', result);
 
@@ -57,6 +64,8 @@ router.post('/subscribe', async (req, res) => {
     return res.status(400).json({ error: result.message });
   }
 });
+
+
 
 
 

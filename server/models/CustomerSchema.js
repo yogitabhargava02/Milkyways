@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema; 
 
 const customerSchema = new mongoose.Schema({
   name: {
@@ -31,9 +32,9 @@ const customerSchema = new mongoose.Schema({
   },
   subscribedMilkmen: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Milkman',
-    },
+      milkmanId: { type: Schema.Types.ObjectId, ref: 'Milkman', required: true },
+      startDate: { type: Date, required: true },
+    }
   ],
 }, { collection: 'customer' });
 
