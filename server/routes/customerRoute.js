@@ -11,8 +11,13 @@ const customerResetPasswordController = require('../controllers/auth/Customer/cu
   
 const subscriptionController = require('../controllers/auth/Customer/customerSubscription');
 const milkmanController = require('../controllers/auth/Customer/milkmanController');
+const{ createCheckoutSession}=require('../controllers/payment/createCheckoutSession')
 router.post('/reset-password', customerResetPasswordController.resetPassword);
 
+
+
+
+router.post('/stripe', createCheckoutSession);
 
 
 
@@ -30,7 +35,7 @@ router.get('/nearby', async (req, res) => {
         coordinates: [parseFloat(req.query.latitude), parseFloat(req.query.longitude)],
       };
   
-      const maxDistance = req.query.maxDistance || 5000; // Default to 5 km if not provided
+      const maxDistance = req.query.maxDistance ||0; // Default to 5 km if not provided
   
       const nearbyMilkmen = await milkmanController.getNearbyMilkmen(customerLocation, maxDistance);
   
@@ -40,10 +45,7 @@ router.get('/nearby', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
-
-// POST /subscribe
-// POST /subscribeconst moment = require('moment');
+ 
 
 router.post('/subscribe', async (req, res) => {
   const { customerId, milkmanId, startDate } = req.body;

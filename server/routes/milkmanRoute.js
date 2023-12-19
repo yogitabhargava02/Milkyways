@@ -5,7 +5,22 @@
     
     const {getSubscribedCustomers} = require('../controllers/auth/getSubscribedCustomers');
 const {markDelivered}=require('../controllers/services/markDelivered');
+const billingService = require('../controllers/services/calculateBill');
 
+// Sample route to calculate the bill for a specific customer
+router.get('/calculateBill/:milkmanId/:customerId', async (req, res) => {
+  try {
+    const milkmanId = req.params.milkmanId;
+    const customerId = req.params.customerId;
+
+    const result = await billingService.calculateBillForCustomer(milkmanId, customerId);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error in calculateBill route:', error.message);
+    res.status(500).json({ success: false, message: 'Error calculating bill' });
+  }
+});
 
     router.get('/:milkmanId/subscribedCustomers', async (req, res) => {
         try {
@@ -31,4 +46,5 @@ const {markDelivered}=require('../controllers/services/markDelivered');
         res.status(500).json({ error: error.message });
       }
     });
+
     module.exports = router;
