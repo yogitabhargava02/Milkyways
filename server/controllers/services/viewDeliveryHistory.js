@@ -4,7 +4,7 @@ function viewDeliveryHistory(subscribedCustomers) {
       .map(subscription => ({
         customer: subscription.customer,
         deliveryDate: subscription.deliveryDate,
-        // Add other relevant delivery details as needed
+      
       }));
   
     return deliveryHistory;

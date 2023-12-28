@@ -1,7 +1,7 @@
-// milkmanController.js
+
 const Milkman = require('../../../models/MilkmanSchema');
 
-// milkmanController.js
+
 async function getNearbyMilkmen(customerLocation, maxDistance) {
     try {
       console.log('Received Coordinates:', customerLocation);
