@@ -5,15 +5,16 @@ import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 const CustomerDashboard = () => {
   const [nearbyMilkmen, setNearbyMilkmen] = useState([]);
-  const [filterDistance, setFilterDistance] = useState(5);
   const [subscribedMilkmen, setSubscribedMilkmen] = useState([]);
+  const [loading, setLoading] = useState(false); // Added loading state
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const token = localStorage.getItem('token');
-const Navigate=useNavigate();
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const fetchNearbyMilkmen = async () => {
       try {
+        setLoading(true); // Set loading to true before the request
         const storedLongitude = localStorage.getItem('userLongitude');
         const storedLatitude = localStorage.getItem('userLatitude');
 
@@ -32,6 +33,8 @@ const Navigate=useNavigate();
         }
       } catch (error) {
         console.error('Error fetching nearby milkmen:', error);
+      } finally {
+        setLoading(false); // Set loading to false after the request, whether successful or not
       }
     };
 
@@ -43,15 +46,44 @@ const Navigate=useNavigate();
     window.location.href = telUri;
   };
 
-  const handleSubscribe = (milkmanId) => {
-    
-    if (!token) {
-     
-      Navigate('/clogin'); 
-      return;
+  const handleSubscribe = async (milkmanId) => {
+    try {
+      if (!token) {
+        Navigate('/clogin');
+        return;
+      }
+  
+      const customerId = localStorage.getItem('customerId');
+      console.log("hello")
+      const startDate = new Date().toISOString();
+  const Quantity=2;
+      console.log('customerId:', customerId);
+      console.log('milkmanId:', milkmanId);
+      console.log('startDate:', startDate);
+  
+      setLoading(true);
+      const response = await axios.post(`${backendUrl}customer/subscribe`, {
+        customerId,
+        milkmanId,
+        startDate,
+        Quantity,
+      });
+  
+      console.log('Subscription Response:', response.data);
+  
+      if (response.data.success) {
+        setSubscribedMilkmen([...subscribedMilkmen, milkmanId]);
+      } else {
+        console.error('Subscription failed:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error subscribing:', error);
+    } finally {
+      setLoading(false);
     }
- 
-  }
+  };
+  
+
   return (
     <div className="min-h-screen bg-gray-100">
       <main className="container mx-auto p-4">

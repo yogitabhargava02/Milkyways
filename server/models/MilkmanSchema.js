@@ -53,6 +53,12 @@ const milkmanSchema = new mongoose.Schema({
         type: Date,
         required: true,
       },
+      Quantity: {
+        type: Number,
+        
+      },
+      
+
     },
   ],
   
