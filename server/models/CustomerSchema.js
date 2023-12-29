@@ -34,6 +34,7 @@ const customerSchema = new mongoose.Schema({
     {
       milkmanId: { type: Schema.Types.ObjectId, ref: 'Milkman', required: true },
       startDate: { type: Date, required: true },
+      Quantity:{type:Number},
     }
   ],
 }, { collection: 'customer' });

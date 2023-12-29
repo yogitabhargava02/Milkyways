@@ -30,11 +30,12 @@ const customerLogin = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: '1h' }
     );
-
+    const customerId = customer._id;
+   
     // Use the provided location or the existing customer's location
     const userLocation = location || customer.location;
 
-    res.status(200).json({ token, userLocation });
+    res.status(200).json({ token, userLocation, customerId });
   } catch (error) {
     console.error('Error in customerLogin:', error);
 

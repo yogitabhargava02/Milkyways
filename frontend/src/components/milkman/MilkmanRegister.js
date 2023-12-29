@@ -90,9 +90,9 @@ const MilkmanRegister = () => {
           draggable: true,
           progress: undefined,
         });
-
-        navigate('/mlogin');
-
+    
+      navigate('/mlogin');
+    
       } catch (error) {
 
         toast.error('Registration failed. Please check your information.', {

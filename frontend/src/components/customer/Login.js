@@ -59,7 +59,11 @@ const Login = () => {
 
         const response = await axios.post(`${backendUrl}customer/clogin`, payload);
         const token = response.data.token;
-
+        console.log(response);
+        const customer = response.data.customerId; // Assuming this is how you get the customer ID
+        console.log(customer);
+        // Store customerId in local storage
+        localStorage.setItem('customerId', customer);
         // Handle the token as needed (e.g., store it in localStorage)
         console.log('Login successful! Token:', token);
         localStorage.setItem('token', token);

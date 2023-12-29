@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaUser, FaBell, FaSignOutAlt } from 'react-icons/fa';
-import { Link, Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CustomerDashboard = () => {
   const [nearbyMilkmen, setNearbyMilkmen] = useState([]);
-  const [filterDistance, setFilterDistance] = useState(5);
   const [subscribedMilkmen, setSubscribedMilkmen] = useState([]);
+  const [loading, setLoading] = useState(false);
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const token = localStorage.getItem('token');
-const Navigate=useNavigate();
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const fetchNearbyMilkmen = async () => {
       try {
+        setLoading(true);
         const storedLongitude = localStorage.getItem('userLongitude');
         const storedLatitude = localStorage.getItem('userLatitude');
 
@@ -34,6 +35,9 @@ const Navigate=useNavigate();
         }
       } catch (error) {
         console.error('Error fetching nearby milkmen:', error);
+        toast.error('Failed to fetch nearby milkmen. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -45,15 +49,56 @@ const Navigate=useNavigate();
     window.location.href = telUri;
   };
 
-  const handleSubscribe = (milkmanId) => {
-    
+  const handleSubscribe = async (milkmanId) => {
+  try {
+    const token = localStorage.getItem('token');
+
     if (!token) {
-     
-      Navigate('/clogin'); 
+      toast.error('Please login to add subscription.');
+      Navigate('/clogin');
       return;
     }
- 
+
+    const customerId = localStorage.getItem('customerId');
+    const startDate = new Date().toISOString();
+    const Quantity = 2;
+
+    setLoading(true);
+    const response = await axios.post(`${backendUrl}customer/subscribe`, {
+      customerId,
+      milkmanId,
+      startDate,
+      Quantity,
+    });
+
+    if (response.data.message === 'Subscription successful') {
+      setSubscribedMilkmen([...subscribedMilkmen, milkmanId]);
+
+      // Display toast message for successful subscription
+      toast.success('Subscription successful!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+
+      Navigate('/milkman/markAttendance');
+    } else {
+      console.error('Subscription failed:', response.data.message);
+      toast.error(`Subscription failed: ${response.data.message}`);
+    }
+  } catch (error) {
+    console.error('Error subscribing:', error);
+    toast.error('Error subscribing. Please try again later.');
+  } finally {
+    setLoading(false);
   }
+};
+
   return (
     <div className="min-h-screen bg-gray-100">
       <main className="container mx-auto p-4">
@@ -129,6 +174,9 @@ const Navigate=useNavigate();
           ))}
         </div>
       </main>
+
+      {/* Toast container for displaying messages */}
+      <ToastContainer />
     </div>
   );
 };
