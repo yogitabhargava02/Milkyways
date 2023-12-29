@@ -1,22 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const MilkmanRegister = () => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
-const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
-   
+
     const getLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const { longitude,latitude} = position.coords;
+            const { longitude, latitude } = position.coords;
             setLocation({ longitude, latitude });
           },
           (error) => {
@@ -28,7 +28,7 @@ const navigate=useNavigate();
       }
     };
 
-   
+
     getLocation();
   }, []);
 
@@ -49,38 +49,38 @@ const navigate=useNavigate();
         .required('Confirm Password is required'),
     }),
     onSubmit: async (values) => {
-     
-        try {
-       
-          if (!location || !location.latitude || !location.longitude) {
-          
-            throw new Error('Invalid coordinates provided.');
-          }
-      
-          const registrationData = {
-            ...values,
-            location: {
-              coordinates: [location.longitude, location.latitude],
-              type: 'Point', 
-            },
-          };
-      
-          console.log(registrationData);
-       
+
+      try {
+
+        if (!location || !location.latitude || !location.longitude) {
+
+          throw new Error('Invalid coordinates provided.');
+        }
+
+        const registrationData = {
+          ...values,
+          location: {
+            coordinates: [location.longitude, location.latitude],
+            type: 'Point',
+          },
+        };
+
+        console.log(registrationData);
+
         // Make API call to register endpoint
         const response = await axios.post(`http://localhost:3001/api/milkman/mregister`, registrationData);
 
-      
-         
+
+
         console.log('Registration successful!', response.data);
-    
-      
+
+
         const token = response.data.token;
-    
-        
+
+
         console.log('Token:', token);
         localStorage.setItem('token', token);
-    
+
         toast.success('Registration successful!', {
           position: 'top-right',
           autoClose: 5000,
@@ -90,11 +90,11 @@ const navigate=useNavigate();
           draggable: true,
           progress: undefined,
         });
-    
-      navigate('/mlogin');
-    
+
+        navigate('/mlogin');
+
       } catch (error) {
-       
+
         toast.error('Registration failed. Please check your information.', {
           position: 'top-right',
           autoClose: 5000,
@@ -104,16 +104,16 @@ const navigate=useNavigate();
           draggable: true,
           progress: undefined,
         });
-    
+
         console.error('Registration failed:', error.message);
       }
     },
-    
+
   });
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen signup bg-cover bg-center">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-6">Register</h2>
+        <h2 className="text-2xl font-semibold mb-6">Register as a Milkman</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="mobileNumber" className="block text-gray-700 text-sm font-medium mb-2">
@@ -181,10 +181,13 @@ const navigate=useNavigate();
           </div>
           <button
             type="submit"
-            className="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition duration-300"
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300"
           >
             Register
           </button>
+          <Link to="/mlogin" className="text-blue-500 hover:underline ml-4">
+            Already registered? Login here
+          </Link>
         </form>
       </div>
     </div>

@@ -1,0 +1,117 @@
+.about {
+  padding: 60px;
+}
+.milky {
+  font-weight: 800;
+  font-size: 28px;
+  text-align: center;
+  text-decoration: underline;
+}
+.sec-para {
+  text-align: center;
+  max-width: 777px;
+  margin: 0px auto;
+  margin-top: 30px;
+}
+.sec-para span {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.head-sec {
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+}
+.about__banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 30px;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.ab-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 60%;
+}
+.ab-left span {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px 30px;
+}
+.ab-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.ab-right img {
+  padding: 50px;
+  width: 450px;
+}
+@media (max-width: 867px) {
+  .ab-left {
+    width: 100%;
+  }
+  .ab-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .ab-right img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+@media (min-width: 868px) and (max-width: 1068px) {
+  .ab-left {
+    width: 100%;
+  }
+  .ab-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .ab-right img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+@media (min-width: 868px) and (max-width: 1168px) {
+  .about__banner {
+    flex-wrap: nowrap;
+  }
+  .ab-left {
+    width: 100%;
+  }
+  .ab-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .ab-right img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+.custom-bullet-list {
+  list-style: none;
+  padding: 0;
+}
+
+.custom-bullet-list li:before {
+  content: "\2022"; /* Unicode character for a bullet point */
+  color: #231918; /* Color of the bullet */
+  display: inline-block;
+  width: 1em; /* Adjust the space between the bullet and the text */
+  margin-left: -1em; /* Negative margin to overlap bullet and text */
+}

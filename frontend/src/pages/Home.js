@@ -3,6 +3,8 @@ import NavBar from '../components/shared/Navbar/Navbar';
 import backgroundImage from '../assets/main.jpg';
 import { useNavigate } from 'react-router-dom';
 import "./home.css";
+import Aboutus from './About/Aboutus';
+import Footer from '../components/Footer/Footer';
 // import AttendanceTracker from '../components/calender/attendance';
 
 const Home = () => {
@@ -59,16 +61,21 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cover" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <NavBar />
+    <>
+      <div className="min-h-screen bg-cover" style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <NavBar />
 
-      <div className="flex flex-col items-center justify-center h-full text-blue ml-80">
-        <h1 className="text-4xl font-bold mb-4 mt-60 text">Find Nearby Milkmen</h1>
-        <button onClick={handleSearchNearbyMilkmen} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text">
-          Find Nearby Milkmen
-        </button>
+        <div className="flex flex-col items-center justify-center h-full text-blue ml-80">
+          <h1 className="text-4xl font-bold mb-4 mt-60 text">Find Nearby Milkmen</h1>
+          <button onClick={handleSearchNearbyMilkmen} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text">
+            Find Nearby Milkmen
+          </button>
+        </div>
+
       </div>
-    </div>
+      <Aboutus />
+      <Footer />
+    </>
   );
 };
 

@@ -80,9 +80,9 @@ const MilkmanLogin = () => {
   });
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen image bg-cover bg-center">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-6">Login</h2>
+        <h2 className="text-2xl font-semibold mb-6">Login as a Milkman</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="mobileNumber" className="block text-gray-700 text-sm font-medium mb-2">

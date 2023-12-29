@@ -13,18 +13,20 @@ import MilkmanProfile from './components/milkman/MilkmanProfile';
 import AttendanceTracker from './components/calender/attendance';
 import Payment from './pages/Payement';
 import MilkmanDashboard from './components/milkman/milkmanDashboard';
-import NavBar from './components/shared/Navbar/Navbar';
+// import NavBar from './components/shared/Navbar/Navbar';]
+import About from "./pages/About/Aboutus";
 const stripePromise = loadStripe('your_publishable_key');
 
 function App() {
   return (
-   
+
     <Router>
-     {/* <NavBar/> */}
+      {/* <NavBar/> */}
       <div className="App">
-       
+
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/clogin" element={<Login />} />
           <Route path="/cregister" element={<Register />} />
           <Route path="/customerDashboard" element={<CustomerDashboard />} />

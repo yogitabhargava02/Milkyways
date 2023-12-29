@@ -99,7 +99,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-cover bg-center image">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-6">Login</h2>
+        <h2 className="text-2xl font-semibold mb-6">Login as a Customer</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="mobileNumber" className="block text-gray-700 text-sm font-medium mb-2">
