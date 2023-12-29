@@ -91,7 +91,7 @@ const navigate=useNavigate();
           progress: undefined,
         });
     
-      navigate('/mlogin');
+      navigate('/milkman/markAttendance');
     
       } catch (error) {
        

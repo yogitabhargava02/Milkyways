@@ -49,7 +49,11 @@ const MilkmanLogin = () => {
         );
 
         const token = response.data.token;
-
+        const milkman = response.data.milkmanId; // Assuming this is how you get the customer ID
+        console.log(milkman);
+        // Store customerId in local storage
+        localStorage.setItem('MilkmanId', milkman);
+        localStorage.setItem('mtoken', token);
         setLoginSuccess(true);
 
         toast.success('Login successful!', {
