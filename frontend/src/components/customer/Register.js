@@ -2,129 +2,123 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-
+import "./login.css";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
-    const [location, setLocation] = useState(null);
-    const [error, setError] = useState(null);
-  const navigate=useNavigate();
-    useEffect(() => {
-     
-      const getLocation = () => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              setLocation({ latitude, longitude });
-            },
-            (error) => {
-              setError(error.message);
-            }
-          );
-        } else {
-          setError('Geolocation is not supported by this browser.');
-        }
-      };
-  
-     
-      getLocation();
-    }, []);
-  
-    const formik = useFormik({
-      initialValues: {
-        mobileNumber: '',
-        password: '',
-        confirmPassword: '',
-        name: '',
-        address: '',
-      },
-      validationSchema: Yup.object({
-        address: Yup.string().required('Address is required'),
-        mobileNumber: Yup.string().required('Mobile Number is required'),
-        name: Yup.string().required('Username is required'),
-        password: Yup.string().required('Password is required'),
-        confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          .required('Confirm Password is required'),
-      }),
-      onSubmit: async (values) => {
-        try {
-       
-          if (!location || !location.latitude || !location.longitude) {
-          
-            throw new Error('Invalid coordinates provided.');
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLocation({ latitude, longitude });
+          },
+          (error) => {
+            setError(error.message);
           }
-      
-          const registrationData = {
-            ...values,
-            location: {
-              coordinates: [location.longitude, location.latitude],
-              type: 'Point', 
-            },
-          };
-      
-          console.log(registrationData);
-       
-          
-          const response = await axios.post(`${backendUrl}customer/cregister`, registrationData);
-      
-         
-          console.log('Registration successful!', response.data);
-      
-        
-          const token = response.data.token;
-      
-          
-          console.log('Token:', token);
-          localStorage.setItem('token', token);
-      
-          toast.success('Registration successful!', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-      
-        navigate('/clogin');
-      
-        } catch (error) {
-          // Handle registration failure
-      
-          // Display an error message using toast
-          toast.error('Registration failed. Please check your information.', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-          });
-      
-          console.error('Registration failed:', error.message);
+        );
+      } else {
+        setError('Geolocation is not supported by this browser.');
+      }
+    };
+
+
+    getLocation();
+  }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      mobileNumber: '',
+      password: '',
+      confirmPassword: '',
+      name: '',
+      address: '',
+    },
+    validationSchema: Yup.object({
+      address: Yup.string().required('Address is required'),
+      mobileNumber: Yup.string().required('Mobile Number is required'),
+      name: Yup.string().required('Username is required'),
+      password: Yup.string().required('Password is required'),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
+    }),
+    onSubmit: async (values) => {
+      try {
+
+        if (!location || !location.latitude || !location.longitude) {
+
+          throw new Error('Invalid coordinates provided.');
         }
-      },
-      
-    });
-  
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="bg-white p-8 rounded shadow-md w-96">
-          <h2 className="text-2xl font-semibold mb-6">Register</h2>
-  
-          
-          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
-  
-  
+
+        const registrationData = {
+          ...values,
+          location: {
+            coordinates: [location.longitude, location.latitude],
+            type: 'Point',
+          },
+        };
+
+        console.log(registrationData);
+
+
+        const response = await axios.post(`${backendUrl}customer/cregister`, registrationData);
+
+
+        console.log('Registration successful!', response.data);
+
+
+        const token = response.data.token;
+
+
+        console.log('Token:', token);
+        localStorage.setItem('token', token);
+
+        toast.success('Registration successful!', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+
+        navigate('/clogin');
+
+      } catch (error) {
+        // Handle registration failure
+
+        // Display an error message using toast
+        toast.error('Registration failed. Please check your information.', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+        console.error('Registration failed:', error.message);
+      }
+    },
+  });
+
+  return (
+    <div className="flex items-center justify-center h-screen bg-cover bg-center signup">
+      <div className="bg-white p-8 rounded shadow-md w-120">
+        <h2 className="text-2xl font-semibold mb-6">Register</h2>
+
+        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+
         <form onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="mobileNumber" className="block text-gray-700 text-sm font-medium mb-2">
@@ -218,10 +212,13 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition duration-300"
+            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300"
           >
             Register
           </button>
+          <Link to="/clogin" className="text-blue-500 hover:underline ml-4">
+            Already registered? Login here
+          </Link>
         </form>
       </div>
     </div>

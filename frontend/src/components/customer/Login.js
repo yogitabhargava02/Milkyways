@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "./login.css";
 
 const Login = () => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -26,7 +27,7 @@ const Login = () => {
           localStorage.setItem('userLongitude', latitude);
 
           setUserLocation({
-            coordinates: [longitude,latitude],
+            coordinates: [longitude, latitude],
             type: 'Point',
           });
         },
@@ -100,7 +101,7 @@ const Login = () => {
   });
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen bg-cover bg-center image">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
         <form onSubmit={formik.handleSubmit}>
@@ -155,7 +156,7 @@ const Login = () => {
         <ToastContainer position="top-right" />
       </div>
       <div className="w-16" /> {/* Empty space on the right */}
-    </div>
+    </div >
   );
 };
 

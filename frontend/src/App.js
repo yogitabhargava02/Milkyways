@@ -14,15 +14,13 @@ import AttendanceTracker from './components/calender/attendance';
 import Payment from './pages/Payement';
 import MilkmanDashboard from './components/milkman/milkmanDashboard';
 import NavBar from './components/shared/Navbar/Navbar';
-// Load Stripe outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('your_publishable_key');
 
 function App() {
   return (
    
     <Router>
-     <NavBar/>
+     {/* <NavBar/> */}
       <div className="App">
        
         <Routes>
