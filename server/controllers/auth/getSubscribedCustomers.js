@@ -15,16 +15,15 @@ async function getSubscribedCustomers(milkmanId) {
       throw new Error('Milkman not found');
     }
 
-    // Log the milkman to verify it's retrieved correctly
+   
     console.log('Milkman:', milkman);
 
-    // Check if subscribedCustomers is present in the milkman document
     if (!milkman.subscribedCustomers || milkman.subscribedCustomers.length === 0) {
       console.log('No subscribed customers found for this milkman.');
       return { success: true, customers: [] }; // Return an empty array if no subscribed customers
     }
 
-    // Extract subscribedCustomers from the milkman
+  
     const subscribedCustomers = milkman.subscribedCustomers.map((subscription) => ({
       customer: subscription.customer,
       startDate: subscription.startDate,

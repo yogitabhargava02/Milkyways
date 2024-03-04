@@ -32,8 +32,7 @@ const Home = () => {
   };
 
   const fetchNearbyMilkmen = (location) => {
-    // Call your backend API to get nearby milkmen based on the user's location
-    // Update the API endpoint and parameters as per your backend implementation
+    
     const backendUrl = process.env.REACT_APP_BACKEND_URL; // Replace with your actual backend URL
 
     // Example API call using fetch
@@ -45,15 +44,15 @@ const Home = () => {
       params: {
         latitude: location.latitude,
         longitude: location.longitude,
-        maxDistance: 5000, // Example max distance in meters (5 km)
+        maxDistance: 5000, 
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        navigate('/customerDashboard'); // Corrected typo here
-        // Handle the fetched nearby milkmen data
+        navigate('/customerDashboard');
+      
         console.log('Nearby Milkmen:', data.nearbyMilkmen);
-        // Update state or perform any other necessary actions
+      
       })
       .catch((error) => {
         console.error('Error fetching nearby milkmen:', error);
@@ -66,7 +65,7 @@ const Home = () => {
         <NavBar />
 
         <div className="flex flex-col items-center justify-center h-full text-blue ml-80">
-          <h1 className="text-4xl font-bold mb-4 mt-60 text">Find Nearby Milkmen</h1>
+          <h1 className="text-4xl font-bold mb-4 mt-60 text"> Find out your Local Milkman </h1>
           <button onClick={handleSearchNearbyMilkmen} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text">
             Find Nearby Milkmen
           </button>

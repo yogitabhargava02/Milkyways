@@ -86,7 +86,7 @@ const CustomerDashboard = () => {
       });
 
 
-      Navigate('/milkman/markAttendance');
+      // Navigate('/milkman/markAttendance');
     } else {
       console.error('Subscription failed:', response.data.message);
       toast.error(`Subscription failed: ${response.data.message}`);
@@ -138,41 +138,42 @@ const CustomerDashboard = () => {
         </div>
 
         <h2 className="text-3xl font-semibold my-4">Nearby Milkmen</h2>
-
+<br></br>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {nearbyMilkmen.map((milkman) => (
-            <div key={milkman._id} className="bg-white overflow-hidden shadow-md">
-              <div className="p-2">
-                <h3 className="text-lg font-semibold">{milkman.name}</h3>
-              </div>
-              <div className="p-2 flex flex-col items-center">
-                <p className="text-gray-600">{milkman.mobileNumber}</p>
-                <button
-                  className={`mt-2 px-4 py-1 rounded-md text-sm transition duration-300 ${
-                    subscribedMilkmen.includes(milkman._id)
-                      ? 'bg-green-500 text-white hover:bg-green-600 cursor-not-allowed'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  }`}
-                  onClick={() => handleSubscribe(milkman._id)}
-                  disabled={subscribedMilkmen.includes(milkman._id)}
-                >
-                  {subscribedMilkmen.includes(milkman._id) ? 'Subscribed' : 'Subscribe'}
-                </button>
-                <p className="mt-1 text-xs">
-                  {subscribedMilkmen.includes(milkman._id) ? 'Subscribed' : 'Not Subscribed'}
-                </p>
-              </div>
-              <div className="p-2">
-                <button
-                  className={`bg-blue-500 text-white p-1 rounded text-xs hover:bg-blue-600 transition duration-300`}
-                  onClick={() => handleCall("1234567890", milkman.name)}
-                >
-                  Call
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+  {nearbyMilkmen.map((milkman) => (
+    <div key={milkman._id} className="bg-white overflow-hidden shadow-md rounded-md">
+      <div className="p-4 border-b border-gray-300">
+        <h3 className="text-lg font-semibold text-blue-500">{milkman.name}</h3>
+      </div>
+      <div className="p-4 flex flex-col items-center">
+        <p className="text-gray-600">{milkman.mobileNumber}</p>
+        <button
+          className={`mt-2 px-4 py-2 rounded-md text-sm transition duration-300 ${
+            subscribedMilkmen.includes(milkman._id)
+              ? 'bg-green-500 text-white hover:bg-green-600 cursor-not-allowed'
+              : 'bg-blue-500 text-white hover:bg-blue-600'
+          }`}
+          onClick={() => handleSubscribe(milkman._id)}
+          disabled={subscribedMilkmen.includes(milkman._id)}
+        >
+          {subscribedMilkmen.includes(milkman._id) ? 'Subscribed' : 'Subscribe'}
+        </button>
+        <p className="mt-1 text-xs font-bold">
+          {subscribedMilkmen.includes(milkman._id) ? 'Subscribed' : 'Not Subscribed'}
+        </p>
+      </div>
+      <div className="p-4 flex justify-center">
+        <button
+          className={`bg-blue-500 text-white p-2 rounded text-sm hover:bg-blue-600 transition duration-300`}
+          onClick={() => handleCall(milkman.mobileNumber, milkman.name)}
+        >
+          Call
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
+
       </main>
 
       {/* Toast container for displaying messages */}

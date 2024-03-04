@@ -66,7 +66,7 @@ const MilkmanLogin = () => {
           progress: undefined,
         });
 
-        navigate('/home');
+        navigate('/milkman/markAttendance');
       } catch (error) {
         console.error('Login failed:', error.response.data.error);
 
